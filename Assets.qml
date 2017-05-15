@@ -8,48 +8,47 @@ Item {
     property var ui:ui
     property var sounds:sounds
     property var fonts:fonts
-    property var models:models
-
-    Item{
-        id:models
-
-        property ListModel lstPOI :ListModel{
-            ListElement{
-                latitude:47.099180
-                longitude:-1.636729
-                poiID:0
-            }
-            ListElement{
-                latitude:47.096700
-                longitude:-1.635230
-                poiID:1
-            }
-
-            ListElement{
-                latitude:47.095500
-                longitude:-1.637110
-                poiID:2
-            }
-            ListElement{
-                latitude:47.096900
-                longitude:-1.638970
-                poiID:3
-
-            }
-        }
-
-    }
-
+    property bool demoMode : true
 
 
     Item{
         id:fonts
         property FontLoader awesome: FontLoader{ source: "qrc:/res/fonts/fontawesome-webfont.ttf" }
+        property FontLoader defaultFont: FontLoader{ source: "qrc:/res/fonts/Arista2.0.ttf" }
+
+        property FontLoader robotslab: FontLoader{ source: "qrc:/res/fonts/RobotoSlab-Regular.ttf" }
+        property FontLoader montserrat: FontLoader{ source: "qrc:/res/fonts/Montserrat-Regular.ttf" }
+        property FontLoader courgette: FontLoader{ source: "qrc:/res/fonts/Courgette-Regular.ttf" }
+
+
     }
 
     Item{
         id:ui
+        property color rougeorange : "#C9462C"
+        property color rougevif : "#E23D22"
+        property color bleuciel : "#0098B6"
+        property color bleuvif : "#23B9D0"
+        property color bleumarine : "#1F3356"
+
+
+        property color zoomcarte : bleuciel
+        property color fondPOI : bleuvif
+        property color fondDrawer : bleuvif
+        property color fondBandeauTitre : bleuciel
+        property color buttonTextcolor : "white"
+        property color textcolor : bleumarine
+
+
+
         property color buttonColor : "#44FF55"
+        property color buttonBkColor : "black"
+        property color drawerTextcolor : "black"
+        property color buttonBkColorDisabled : "darkgrey"
+        property real buttonBkOpacity:0.8
+        property int defaultWidth:30
+        property int defaultHeight:200
+        property int buttonMargin:3
         property int minimumPixelSize:6
         property int maximumPixelSize:250
         property Gradient backgradient: Gradient{
@@ -62,10 +61,10 @@ Item {
     }
     Item{
         id:sounds
-        property var scanQrOk:scanQrOk
+        property var detectedPOI:detectedPOI
 
         SoundEffect {
-            id: scanQrOk
+            id: detectedPOI
             source: "qrc:/res/audio/scanQrOk.wav"
         }
     }

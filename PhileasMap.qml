@@ -4,6 +4,8 @@ import QtPositioning 5.8
 import QtLocation 5.8
 import QtGraphicalEffects 1.0
 import ATeam.Phileas.AssetsSingleton 1.0
+import QtQuick.Layouts 1.1
+import "./components"
 
 Page {
     id:root
@@ -11,18 +13,29 @@ Page {
 
     signal startPOI(int poiID);
 
-    Map{
+    property int detectedPOI : -1
 
+    onDetectedPOIChanged:{
+        if (detectedPOI != -1)
+            Assets.sounds.detectedPOI.play();
+    }
+
+
+
+    Map{
+        id:myMap
         Component.onCompleted: myMap.activeMapType = myMap.supportedMapTypes[2]
 
-        id:myMap
+
         //opacity:0
         anchors.fill: parent
         plugin:Plugin{
             name:"osm"
             PluginParameter { name: "osm.useragent"; value: "Phileas hobby project" }
-
-
+            PluginParameter { name: "osm.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
+            PluginParameter { name: "osm.mapping.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
+            PluginParameter { name: "osm.mapping.custom.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
+            PluginParameter { name: "osm.mapping.custom.host"; value: "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png" }
         }
 
         copyrightsVisible: root.demo
@@ -37,22 +50,50 @@ Page {
         }
 
         MapItemView{
-            model:Assets.models.lstPOI
+            model:sqlPoiModel
             delegate:PhileasDelegate{
-                poiID : poiID
+                poiID : model.id
+                poiType : model.type
                 coordinate: QtPositioning.coordinate(latitude,longitude)
                 isNear : myMap.center.distanceTo(coordinate) < 50
+                onIsNearChanged:{
+                    if (isNear) root.detectedPOI = index;
+                    else root.detectedPOI = -1;
+                }
+
                 onStartPOI: {
-                    root.startPOI(poiID)
-                    console.log(poiID)
+                    sqlPoiModel.selectedRow = index;
+                    root.startPOI(index)
                 }
             }
         }
 
-
-
-
     }
+
+    Image{
+        source:"qrc:/res/jlm.png"
+        anchors.bottom: myMap.bottom
+        anchors.right : myMap.right
+        height:200
+        width:height*1.168
+        opacity: (root.detectedPOI !=-1) ? 1 : 0
+        fillMode: Image.PreserveAspectFit
+
+        Behavior on opacity {
+            NumberAnimation { duration: 1000 }
+        }
+        MouseArea{
+            anchors.fill:parent
+            enabled: (root.detectedPOI !=-1)
+            onClicked: {
+                sqlPoiModel.selectedRow = root.detectedPOI;
+                root.startPOI(root.detectedPOI)
+            }
+        }
+    }
+
+
+
     MouseArea{
         anchors.fill:myMap
         enabled: root.demo
@@ -67,47 +108,31 @@ Page {
         preferredPositioningMethods: PositionSource.AllPositioningMethods
     }
 
-    Item{
-        width:50
+
+    ATButtonText {
         height:50
-        Text{
-            anchors.fill: parent
-            fontSizeMode:Text.Fit
-            font.pixelSize: Assets.ui.maximumPixelSize
-            color:Assets.ui.buttonColor
-            minimumPixelSize: Assets.ui.minimumPixelSize
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment : Qt.AlignVCenter
-            font.family:Assets.fonts.awesome.name
-            text:"\uf010" //fa-search-minus f00e
-            visible:myMap.zoomLevel>=15
-            MouseArea{
-                anchors.fill: parent
-                onClicked: myMap.zoomLevel--
-            }
-        }
+        width:height
+        textColor:Assets.ui.zoomcarte
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        fontFamily:Assets.fonts.awesome.name
+        text:"\uf010" //fa-search-minus f00e
+        visible:myMap.zoomLevel>=myMap.minimumZoomLevel
+        onClicked: myMap.zoomLevel--
 
     }
-    Item{
-        anchors.right:parent.right
-        width:50
-        height:50
-        Text{
-            anchors.fill: parent
-            fontSizeMode:Text.Fit
-            font.pixelSize: Assets.ui.maximumPixelSize
-            color: Assets.ui.buttonColor
-            minimumPixelSize: Assets.ui.minimumPixelSize
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment : Qt.AlignVCenter
-            font.family:Assets.fonts.awesome.name
-            text:"\uf00e" //fa-search-minus
-            visible:myMap.zoomLevel<=myMap.maximumZoomLevel
-            MouseArea{
-                anchors.fill: parent
-                onClicked: myMap.zoomLevel++
-            }
-        }
 
+
+    ATButtonText{
+        height:50
+        width:height
+        textColor:Assets.ui.zoomcarte
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        fontFamily:Assets.fonts.awesome.name
+        text:"\uf00e" //fa-search-minus
+        visible:myMap.zoomLevel<=myMap.maximumZoomLevel
+        onClicked: myMap.zoomLevel++
     }
+
 }

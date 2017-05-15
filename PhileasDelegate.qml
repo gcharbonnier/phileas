@@ -5,20 +5,19 @@ import ATeam.Phileas.AssetsSingleton 1.0
 
 
 MapQuickItem{
-
     id:root
     property int poiID : 0
+    property int poiType : 0
     property bool isNear : false
 
     signal startPOI(int poiID);
-
-
 
     sourceItem:Image{
         id:imgPOIDelegate
         width:50
         height:50
-        source:"qrc:/res/img/phi_blanc.png"
+        //source:"qrc:/res/img/phi_blanc.png"
+        source:"qrc:/res/img/phi rouge.png"
         fillMode:Image.PreserveAspectFit
 
         PropertyAnimation{
@@ -34,10 +33,8 @@ MapQuickItem{
         MouseArea{
             anchors.fill: imgPOIDelegate
             enabled:root.isNear
-            onClicked: {
-                root.startPOI(root.poiID)
-                console.log("deg"+poiID)
-            }
+            onClicked: root.startPOI(root.poiID)
+
         }
     }
 }

@@ -1,8 +1,10 @@
-QT += qml quick location
+QT += qml quick location sql
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    qdatabasemodels.cpp \
+    qblobimage.cpp
 
 RESOURCES += qml.qrc
 
@@ -28,3 +30,26 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
+    android/assets/44-9.db
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+TARGET.CAPABILITY += SwEvent #Bring web explorer to front to open url
+
+android {
+    deployment.path = /assets
+    deployment.files += 44-9.db
+    INSTALLS += deployment
+}
+
+HEADERS += \
+    qdatabasemodels.h \
+    qblobimage.h

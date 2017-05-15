@@ -9,8 +9,18 @@
         <file>PhileasDelegate.qml</file>
         <file>PhileasMap.qml</file>
         <file>res/img/phi_blanc.png</file>
-        <file>res/tmp/candidate.jpg</file>
-        <file>res/tmp/candidat.jpg</file>
-        <file>res/splash.jpg</file>
+        <file>components/ATButtonText.qml</file>
+        <file>components/ATText.qml</file>
+        <file>res/fonts/Arista2.0.ttf</file>
+        <file>FicheCandidats.qml</file>
+        <file>res/jlm.png</file>
+        <file>res/tmp/candidate.png</file>
+        <file>res/tmp/candidat.png</file>
+        <file>res/fonts/RobotoSlab-Regular.ttf</file>
+        <file>res/fonts/Courgette-Regular.ttf</file>
+        <file>res/fonts/Montserrat-Regular.ttf</file>
+        <file>res/img/phi rouge.svg</file>
+        <file>Fiche.qml</file>
+        <file>res/img/phi rouge.png</file>
     </qresource>
 </RCC>
