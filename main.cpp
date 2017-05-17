@@ -4,6 +4,7 @@
 
 #include <QDir>
 #include <QStandardPaths>
+#include <QSqlQuery>
 
 #include "qdatabasemodels.h"
 #include "qblobimage.h"
@@ -37,6 +38,31 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_IOS
 
 #endif
+
+    /*
+    QString remoteDB = QString("https://sites.google.com/site/retzistance/44-9.db");
+    QString versionDesc = QString("http://krutagor.free.fr/phileas/phileas.xml");
+
+    QFile file2( remoteDB );
+    QFile fileVersionDesc( versionDesc );
+          if (!fileVersionDesc.open(QIODevice::ReadOnly | QIODevice::Text))
+              return 1;
+
+          QTextStream in(&fileVersionDesc);
+          while (!in.atEnd()) {
+              QString line = in.readLine();
+
+          }
+    db.setDatabaseName(remoteDB);
+    uint currentVersion = 0;
+    if (db.open())
+    {
+        QSqlQuery query("SELECT version FROM info");
+        query.next();
+        currentVersion = query.value(0).toUInt();
+    }
+    */
+
     db.setDatabaseName(absPath);
     if (!db.open())
         qCritical() << "Failed opening dataBase";
@@ -44,6 +70,11 @@ int main(int argc, char *argv[])
         qInfo() << "Opening dataBase ok  at "<< absPath;
         qInfo() << db.tables();
     }
+
+    QSqlQuery query("SELECT version FROM info");
+    query.next();
+    uint localVersion = query.value(0).toUInt();
+
 
     QQmlApplicationEngine engine;
 

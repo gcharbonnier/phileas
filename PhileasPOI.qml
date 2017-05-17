@@ -41,17 +41,18 @@ Page {
 
     footer: ToolBar {
         background: Rectangle {
-                  implicitHeight: 40
-                  color: Assets.ui.fondBandeauTitre
+            id:footer
+            implicitHeight: 40
+            color: Assets.ui.fondBandeauTitre
 
-                  Rectangle {
-                      width: parent.width
-                      height: 1
-                      anchors.top: parent.top
-                      color: "transparent"
-                      border.color: "white"
-                  }
-              }
+            Rectangle {
+                width: parent.width
+                height: 1
+                anchors.top: parent.top
+                color: "transparent"
+                border.color: "white"
+            }
+        }
         RowLayout {
             anchors.fill: parent
             ATButtonText {
@@ -171,6 +172,7 @@ Page {
         visible:infoLabel.text != ""
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 40
         fontFamily:Assets.fonts.awesome.name
         text:"\uf059" //fa-question-sign
         onClicked: root.state = root.state=="INFO" ? "" : "INFO"
@@ -182,6 +184,7 @@ Page {
         visible:laecLabel.text != ""
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 40
         fontFamily:Assets.fonts.awesome.name
         text:"\uf02d" //icon book
         onClicked: root.state = root.state=="LAEC" ? "" : "LAEC"

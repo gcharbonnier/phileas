@@ -11,8 +11,8 @@ import Qt.labs.settings 1.0
 ApplicationWindow {
     id:mainApp
     visible: true
-    width: 640
-    height: 960
+    //width: 640
+    //height: 960
     title: qsTr("Phileas")
 
     Component.onCompleted: {
@@ -151,6 +151,11 @@ ApplicationWindow {
                 stack.replace("qrc:/PhileasPOI.qml", {"poiId":poiID})
             }
         }
+    }
+
+    Splash {
+        width:mainApp.width
+        height:mainApp.overlay.height
     }
 
 

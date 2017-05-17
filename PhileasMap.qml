@@ -20,22 +20,22 @@ Page {
             Assets.sounds.detectedPOI.play();
     }
 
-
+    ComboBox{
+        model:myMap.supportedMapTypes
+        textRole:"description"
+        onCurrentIndexChanged: myMap.activeMapType = myMap.supportedMapTypes[currentIndex]
+    }
 
     Map{
         id:myMap
-        Component.onCompleted: myMap.activeMapType = myMap.supportedMapTypes[2]
+        Component.onCompleted: myMap.activeMapType = myMap.supportedMapTypes[1]
 
 
         //opacity:0
         anchors.fill: parent
         plugin:Plugin{
-            name:"osm"
-            PluginParameter { name: "osm.useragent"; value: "Phileas hobby project" }
-            PluginParameter { name: "osm.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
-            PluginParameter { name: "osm.mapping.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
-            PluginParameter { name: "osm.mapping.custom.apikey"; value: "411732fe1c3144c892da530d0d35ee85" }
-            PluginParameter { name: "osm.mapping.custom.host"; value: "https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png" }
+            name:"esri"
+
         }
 
         copyrightsVisible: root.demo

@@ -22,5 +22,8 @@
         <file>res/img/phi rouge.svg</file>
         <file>Fiche.qml</file>
         <file>res/img/phi rouge.png</file>
+        <file>Splash.qml</file>
+        <file>res/splash.jpg</file>
+        <file>res/richedtext.js</file>
     </qresource>
 </RCC>

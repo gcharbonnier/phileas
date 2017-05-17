@@ -1,10 +1,11 @@
-QT += qml quick location sql
+QT += qml quick location sql xml
 
 CONFIG += c++11
 
 SOURCES += main.cpp \
     qdatabasemodels.cpp \
-    qblobimage.cpp
+    qblobimage.cpp \
+    updatemanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -52,4 +53,5 @@ android {
 
 HEADERS += \
     qdatabasemodels.h \
-    qblobimage.h
+    qblobimage.h \
+    updatemanager.h

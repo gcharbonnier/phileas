@@ -6,7 +6,7 @@ import ATeam.BlobImage 1.0
 
 Item {
     id:root
-    property alias photo: photo.imageData
+    property alias photo: photoCand.imageData
     property alias nom: nom.text
     property alias tel: tel.text
     property alias email: email.text
@@ -21,23 +21,25 @@ Item {
         spacing : 15
 
         BlobImage{
-            id:photo
+            id:photoCand
             visible:true
-            width:parent.width
-            height:300
+            width:parent.width * .5
+            height:Math.min(200,parent.height * .2)
         }
 
         GridLayout {
             id:contactDetails
             visible: true
             width:parent.width
+            anchors.right:parent.right
             columns: 2
             rowSpacing: 10
             columnSpacing: 10
 
             Label {
                 text: qsTr("Nom :")
-                Layout.leftMargin: 60
+                Layout.leftMargin: 1
+                wrapMode:Text.Wrap
             }
 
             Label {
@@ -46,11 +48,13 @@ Item {
                 elide: Text.ElideRight
                 Layout.fillWidth: true
                 color:"white"
+                wrapMode:Text.Wrap
             }
 
             Label {
                 text: qsTr("Tel:")
-                Layout.leftMargin: 60
+                Layout.leftMargin: 1
+                wrapMode:Text.Wrap
             }
 
             Label {
@@ -58,6 +62,7 @@ Item {
                 font.bold: true
                 elide: Text.ElideRight
                 color:"white"
+                wrapMode:Text.Wrap
                 MouseArea{
                     anchors.fill:parent
                     onClicked: Qt.openUrlExternally("tel:"+parent.text)
@@ -66,7 +71,8 @@ Item {
 
             Label {
                 text: qsTr("e-Mail:")
-                Layout.leftMargin: 60
+                Layout.leftMargin: 1
+                wrapMode:Text.Wrap
             }
 
             Label {
@@ -74,6 +80,7 @@ Item {
                 font.bold: true
                 elide: Text.ElideRight
                 color:"white"
+                wrapMode:Text.Wrap
                 MouseArea{
                     anchors.fill:parent
                     onClicked: Qt.openUrlExternally("mailto:"+parent.text)
@@ -86,7 +93,7 @@ Item {
             contentWidth: width
             contentHeight: cv.height
             clip: true
-            height:parent.height - photo.height - contactDetails.height - 2 *col.spacing
+            height:parent.height - photoCand.height - contactDetails.height - 2 *col.spacing
             Label {
                 id:cv
                 width:parent.width
